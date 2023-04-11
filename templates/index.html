@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Host</title>
+  <script id='sap-ui-bootstrap'
+  src='https://ui5.sap.com/resources/sap-ui-core.js'
+  data-sap-ui-theme='sap_fiori_3_dark'
+  data-sap-ui-libs='sap.m,sap.f,sap.viz,sap.ui.integration'
+  data-sap-ui-xx-bindingSyntax='complex'>
+  </script>
+  <script>
+    sap.ui.getCore().attachInit(function () {
+      var oPage = new sap.m.Page({
+        title: "Enter Your Text Input",
+        content: [
+          new sap.ui.layout.form.SimpleForm({
+            layout: "ResponsiveGridLayout",
+            content: [
+              new sap.m.Label({ text: "spaceName" }),
+              new sap.m.Input({ id: "spaceName", placeholder: "Enter your space name here" }),
+              new sap.m.Label({ text: "orgName" }),
+              new sap.m.Input({ id: "orgName", placeholder: "Enter your org name here" }),
+              new sap.m.Label({ text: "email" }),
+              new sap.m.Input({ id: "email", placeholder: "Enter your email here" }),
+              new sap.m.Label({ text: "password" }),
+              new sap.m.Input({ id: "password", type: sap.m.InputType.Password, placeholder: "Enter your password here" }),
+              new sap.m.Label({ text: "apiurl" }),
+              new sap.m.Input({ id: "apiurl", placeholder: "Enter your api url here" })
+            ]
+          }),
+          new sap.m.Button({
+            text: "Submit",
+            press: function () {
+              var spaceName = sap.ui.getCore().byId("spaceName").getValue();
+              var orgName = sap.ui.getCore().byId("orgName").getValue();
+              var email = sap.ui.getCore().byId("email").getValue();
+              var password = sap.ui.getCore().byId("password").getValue();
+              var apiurl = sap.ui.getCore().byId("apiurl").getValue();
+
+              var xhr = new XMLHttpRequest();
+              var url = "add_host";
+              xhr.open("POST", url, true);
+              xhr.setRequestHeader("Content-Type", "application/json");
+              xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                  console.log(xhr.responseText);
+                }
+              };
+              var data = JSON.stringify({"spaceName": spaceName, "orgName": orgName, "email": email, "password": password, "apiurl": apiurl});
+              xhr.send(data);
+            }
+          })
+        ]
+      });
+      var app = new sap.m.App({
+        pages: [oPage]
+      });
+      app.placeAt("content");
+    });
+  </script>
+</head>
+<body class="sapUiBody" id="content"></body>
+</html>
