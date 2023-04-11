@@ -16,19 +16,9 @@ def add_host():
     return 'Host added successfully'
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET'])
 def home():
-    if request.method == 'POST':
-        space_name = request.form['spaceName']
-        org_name = request.form['orgName']
-        email = request.form['email']
-        password = request.form['password']
-        apiurl = request.form['apiurl']
-        print(f"spaceName: {space_name}")
-        print(f"orgName: {org_name}")
-        print(f"email: {email}")
-        print(f"password: {password}")
-        print(f"apiurl: {apiurl}")
+        
     return render_template('index.html')
 
 if __name__ == '__main__':
